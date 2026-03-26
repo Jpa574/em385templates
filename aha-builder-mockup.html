@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHABuilder - USACE Safety Compliance Made Simple</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; }
+        
+        /* Header */
+        header { background: #1a1a2e; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: bold; color: #f39c12; }
+        .nav a { color: white; text-decoration: none; margin-left: 1.5rem; }
+        .btn-cta { background: #f39c12; color: #1a1a2e; padding: 0.5rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 4rem 2rem; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.3rem; opacity: 0.9; margin-bottom: 2rem; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; }
+        .btn-primary { background: #f39c12; color: #1a1a2e; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; }
+        .btn-secondary { background: transparent; border: 2px solid white; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-size: 1.1rem; }
+        
+        /* Features */
+        .features { padding: 4rem 2rem; background: #f8f9fa; }
+        .features h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .feature-card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .feature-card h3 { color: #f39c12; margin-bottom: 1rem; }
+        
+        /* Demo Section */
+        .demo { padding: 4rem 2rem; background: white; }
+        .demo h2 { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; }
+        .demo-box { max-width: 900px; margin: 0 auto; border: 2px solid #ddd; border-radius: 10px; overflow: hidden; }
+        .demo-header { background: #e9ecef; padding: 1rem; display: flex; gap: 0.5rem; }
+        .demo-dot { width: 12px; height: 12px; border-radius: 50%; background: #ccc; }
+        .demo-content { padding: 2rem; }
+        
+        /* Form Mockup */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+        .form-group select, .form-group input { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        /* Table */
+        .aha-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+        .aha-table th { background: #1a1a2e; color: white; padding: 0.8rem; text-align: left; }
+        .aha-table td { border: 1px solid #ddd; padding: 0.8rem; }
+        .aha-table tr:nth-child(even) { background: #f8f9fa; }
+        
+        /* Pricing */
+        .pricing { padding: 4rem 2rem; background: #1a1a2e; color: white; }
+        .pricing h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .pricing-card { background: white; color: #333; padding: 2rem; border-radius: 10px; text-align: center; }
+        .pricing-card.featured { border: 3px solid #f39c12; transform: scale(1.05); }
+        .pricing-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .price { font-size: 2.5rem; font-weight: bold; color: #f39c12; margin-bottom: 1rem; }
+        .price span { font-size: 1rem; color: #666; }
+        .pricing-card ul { list-style: none; text-align: left; margin: 1.5rem 0; }
+        .pricing-card li { padding: 0.5rem 0; border-bottom: 1px solid #eee; }
+        .pricing-card li::before { content: "✓"; color: #27ae60; margin-right: 0.5rem; }
+        
+        /* Footer */
+        footer { background: #0f0f1a; color: #888; padding: 2rem; text-align: center; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">🏗️ AHABuilder</div>
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#demo">Demo</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#" class="btn-cta">Get Started</a>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>USACE Safety Compliance Made Simple</h1>
+        <p>Generate EM 385-1-1 compliant Activity Hazard Analyses in minutes. No more expensive consultants or complicated software.</p>
+        <div class="hero-buttons">
+            <a href="#demo" class="btn-primary">Try the Demo</a>
+            <a href="#pricing" class="btn-secondary">View Pricing</a>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <h2>Why AHABuilder?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>📋 ENG Form 6206 Ready</h3>
+                <p>Every AHA generated matches the exact format required by USACE for project submission.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Fast & Easy</h3>
+                <p>Select your activity, customize the details, and download your ready-to-submit PDF in minutes.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💰 Affordable</h3>
+                <p>Starting at just $29/month. No per-project fees. No per-user charges. Unlimited AHAs.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📚 2024 EM 385-1-1</h3>
+                <p>All templates automatically updated to the latest USACE safety requirements.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="demo" class="demo">
+        <h2>Try It Free - Build Your First AHA</h2>
+        <div class="demo-box">
+            <div class="demo-header">
+                <div class="demo-dot" style="background: #ff5f56;"></div>
+                <div class="demo-dot" style="background: #ffbd2e;"></div>
+                <div class="demo-dot" style="background: #27ca40;"></div>
+            </div>
+            <div class="demo-content">
+                <div class="form-group">
+                    <label>Select Activity Type</label>
+                    <select>
+                        <option>⛏️ Excavation - Trenching & Shoring</option>
+                        <option>🏗️ Scaffolding - Mobile/Stationary</option>
+                        <option>⚡ Electrical Work</option>
+                        <option>🏗️ Crane & Rigging Operations</option>
+                        <option>🔥 Confined Space Entry</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Project Name</label>
+                        <input type="text" placeholder="e.g., Smith Lake Dam Repairs">
+                    </div>
+                    <div class="form-group">
+                        <label>Contract Number</label>
+                        <input type="text" placeholder="e.g., W912DX-24-C-0054">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Contractor Name</label>
+                        <input type="text" placeholder="Your Company Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Project Location</label>
+                        <input type="text" placeholder="City, State">
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">📋 Activity Steps (Auto-Generated)</h3>
+                <table class="aha-table">
+                    <tr>
+                        <th>Step</th>
+                        <th>Work Step</th>
+                        <th>Potential Hazards</th>
+                        <th>Controls</th>
+                        <th>RAC</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Call 811 before digging</td>
+                        <td>Striking underground utilities</td>
+                        <td>Verify utilities marked</td>
+                        <td><span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 3px;">H</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Perform soil assessment</td>
+                        <td>Cave-in, soil failure</td>
+                        <td>Competent person classifies soil</td>
+                        <td><span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 3px;">E</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Install trench box</td>
+                        <td>Cave-in during setup</td>
+                        <td>Install before workers enter</td>
+                        <td><span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 3px;">E</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Excavate with equipment</td>
+                        <td>Cave-in, struck-by</td>
+                        <td>Spoil pile 2ft+ from edge</td>
+                        <td><span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 3px;">E</span></td>
+                    </tr>
+                </table>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button style="background: #27ae60; color: white; padding: 1rem 2rem; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; margin-right: 1rem;">📄 Download PDF</button>
+                    <button style="background: #3498db; color: white; padding: 1rem 2rem; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer;">✏️ Edit Steps</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="pricing" class="pricing">
+        <h2>Simple, Affordable Pricing</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Free Tier</h3>
+                <div class="price">$0</div>
+                <span>forever</span>
+                <ul>
+                    <li>3 Basic AHA Templates</li>
+                    <li>Watermarked PDFs</li>
+                    <li>Basic Support</li>
+                    <li>Community Access</li>
+                </ul>
+                <a href="#" class="btn-cta" style="display: block; background: #95a5a6; color: white; padding: 0.8rem; text-decoration: none; border-radius: 5px;">Get Started</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3>Pro Builder</h3>
+                <div class="price">$29<span>/month</span></div>
+                <span>or $290/year (save 17%)</span>
+                <ul>
+                    <li>Unlimited AHA Templates</li>
+                    <li>No Watermark</li>
+                    <li>PDF Export Ready to Submit</li>
+                    <li>2024 EM 385-1-1 Updates</li>
+                    <li>Priority Support</li>
+                    <li>All Activity Categories</li>
+                </ul>
+                <a href="#" class="btn-cta" style="display: block; background: #f39c12; color: #1a1a2e; padding: 0.8rem; text-decoration: none; border-radius: 5px;">Start Free Trial</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Custom Service</h3>
+                <div class="price">$150<span>/project</span></div>
+                <span>one-time</span>
+                <ul>
+                    <li>We Build Your AHA</li>
+                    <li>Full Project Review</li>
+                    <li>Guaranteed Compliance</li>
+                    <li>USACE Ready to Submit</li>
+                    <li>Unlimited Revisions</li>
+                    <li>24-Hour Turnaround</li>
+                </ul>
+                <a href="#" class="btn-cta" style="display: block; background: #9b59b6; color: white; padding: 0.8rem; text-decoration: none; border-radius: 5px;">Get Quote</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>🏗️ AHABuilder - Built for Small Contractors, By People Who Know Safety</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2026 AHABuilder.com | EM 385-1-1 Compliant</p>
+    </footer>
+</body>
+</html>
