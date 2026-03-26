@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EM385Templates.com - USACE AHA Generator</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1a365d;
+            --accent: #ed8936;
+            --light: #f7fafc;
+            --dark: #2d3748;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--light); color: var(--dark); line-height: 1.6; }
+        
+        /* Header */
+        header { background: var(--primary); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .logo span { color: var(--accent); }
+        
+        /* Hero */
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%); color: white; padding: 4rem 2rem; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem; }
+        .hero .price { font-size: 3rem; font-weight: bold; color: var(--accent); }
+        .hero .price span { font-size: 1rem; opacity: 0.8; }
+        
+        /* Buttons */
+        .btn { display: inline-block; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; transition: transform 0.2s; }
+        .btn:hover { transform: scale(1.02); }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-secondary { background: white; color: var(--primary); }
+        
+        /* Builder Section */
+        .builder { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .builder h2 { margin-bottom: 1.5rem; color: var(--primary); }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+        .form-group input, .form-group select { width: 100%; padding: 0.8rem; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        /* Table */
+        .aha-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .aha-table th { background: var(--primary); color: white; padding: 0.75rem; text-align: left; font-size: 0.9rem; }
+        .aha-table td { border: 1px solid #e2e8f0; padding: 0.75rem; font-size: 0.9rem; }
+        .aha-table tr:nth-child(even) { background: #f7fafc; }
+        
+        .rac { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: bold; color: white; font-size: 0.8rem; }
+        .rac-E { background: #e53e3e; }
+        .rac-H { background: #dd6b20; }
+        .rac-M { background: #d69e2e; }
+        .rac-L { background: #38a169; }
+        
+        /* Actions */
+        .actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        
+        /* Watermark */
+        .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 4rem; opacity: 0.1; pointer-events: none; font-weight: bold; color: gray; z-index: -1; }
+        
+        /* Footer */
+        footer { background: var(--dark); color: white; padding: 2rem; text-align: center; margin-top: 3rem; }
+        
+        /* Toast */
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: white; padding: 1rem 2rem; border-radius: 8px; display: none; }
+        
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">EM385Templates.com</div>
+    
+    <header>
+        <div class="logo">EM385<span>Templates</span>.com</div>
+        <nav>
+            <a href="#builder" style="color: white; text-decoration: none; margin-left: 1rem;">Generator</a>
+            <a href="#pricing" style="color: white; text-decoration: none; margin-left: 1rem;">Pricing</a>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>USACE EM 385-1-1 Compliant AHAs</h1>
+        <p>Generate professional Activity Hazard Analysis forms in minutes. Built for contractors, by safety professionals.</p>
+        <div class="price">$29<span>/month</span></div>
+        <p>Unlimited AHAs. No per-project fees.</p>
+        <a href="#builder" class="btn btn-primary">Try Free Demo</a>
+        <a href="#pricing" class="btn btn-secondary">View Plans</a>
+    </section>
+    
+    <section id="builder" class="builder">
+        <h2>Build Your Activity Hazard Analysis</h2>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Activity Type *</label>
+                <select id="activityType">
+                    <option value="">-- Select Activity --</option>
+                    <option value="excavation">Excavation - Trenching & Shoring</option>
+                    <option value="scaffolding">Scaffolding - Mobile & Fixed</option>
+                    <option value="electrical">Electrical Work</option>
+                    <option value="confined-space">Confined Space Entry</option>
+                    <option value="crane">Crane & Rigging Operations</option>
+                    <option value="fall-protection">Fall Protection >6ft</option>
+                    <option value="fire-protection">Fire Protection & Hot Work</option>
+                    <option value="traffic">Traffic Control</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Contract Number *</label>
+                <input type="text" id="contractNum" placeholder="e.g., W912DX-26-C-0012">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Project Name *</label>
+                <input type="text" id="projectName" placeholder="e.g., Lake Dam Repairs">
+            </div>
+            <div class="form-group">
+                <label>Project Location *</label>
+                <input type="text" id="projectLocation" placeholder="e.g., Fort Worth, TX">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Contractor Name *</label>
+            <input type="text" id="contractorName" placeholder="Your Company Name">
+        </div>
+        
+        <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Activity Steps</h3>
+        <table class="aha-table">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">Step</th>
+                    <th>Work Step</th>
+                    <th>Potential Hazards</th>
+                    <th>Controls</th>
+                    <th style="width: 60px;">RAC</th>
+                </tr>
+            </thead>
+            <tbody id="ahaTableBody">
+                <tr><td colspan="5" style="text-align: center; color: #718096;">Select an activity to generate AHA steps</td></tr>
+            </tbody>
+        </table>
+        
+        <div class="actions">
+            <button class="btn btn-primary" onclick="generatePDF()">Download PDF</button>
+            <button class="btn btn-secondary" onclick="clearForm()">Clear</button>
+        </div>
+        
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #718096;">
+            <em>Free users get first 2 steps. Upgrade for full AHA.</em>
+        </p>
+    </section>
+    
+    <section id="pricing" style="max-width: 800px; margin: 3rem auto; padding: 2rem;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Simple Pricing</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div style="background: white; padding: 2rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3>Free Demo</h3>
+                <div style="font-size: 2.5rem; font-weight: bold; color: #718096;">$0</div>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1.5rem;">
+                    <li>First 2 steps only</li>
+                    <li>Watermarked PDF</li>
+                    <li>1 activity type</li>
+                </ul>
+                <button class="btn btn-secondary">Get Started</button>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 3px solid #ed8936;">
+                <h3>Pro Builder</h3>
+                <div style="font-size: 2.5rem; font-weight: bold; color: #ed8936;">$29<span>/mo</span></div>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1.5rem;">
+                    <li>Unlimited steps</li>
+                    <li>No watermark</li>
+                    <li>All 8 activity types</li>
+                    <li>2024 EM 385-1-1 compliant</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="btn btn-primary" onclick="subscribe()">Subscribe Now</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2026 EM385Templates.com - All rights reserved</p>
+        <p style="font-size: 0.9rem; opacity: 0.7;">EM 385-1-1 Compliant Activity Hazard Analysis Generator</p>
+    </footer>
+    
+    <div class="toast" id="toast">Message here</div>
+    
+    <script>
+        // AHA Data
+        const ahaData = {
+            'excavation': [
+                { step: 1, work: 'Contact 811 utility locate service', hazard: 'Striking underground utilities (gas, electric, water)', control: 'Call 811 minimum 72 hours before digging; verify all utilities marked', rac: 'H' },
+                { step: 2, work: 'Perform soil assessment (GMM)', hazard: 'Cave-in, soil failure', control: 'Competent person classifies soil per EM 385-1-1', rac: 'E' },
+                { step: 3, work: 'Install trench box/shoring', hazard: 'Cave-in during installation', control: 'Install shoring BEFORE workers enter excavation >4ft', rac: 'E' },
+                { step: 4, work: 'Excavate using equipment', hazard: 'Cave-in, struck-by equipment, rollover', control: 'Maintain safe distance from trench edge; spoil pile >2ft from edge', rac: 'E' },
+                { step: 5, work: 'Workers enter excavation', hazard: 'Cave-in, falls', control: 'Workers must remain in trench box or sloped area; ladder within 25ft', rac: 'E' },
+                { step: 6, work: 'Monitor atmospheric conditions', hazard: 'Oxygen deficiency, toxic atmosphere', control: 'Test air quality if >4ft deep; provide ventilation', rac: 'H' },
+                { step: 7, work: 'Backfill excavation', hazard: 'Struck-by equipment', control: 'All workers exit before backfill; spotter required', rac: 'E' }
+            ],
+            'scaffolding': [
+                { step: 1, work: 'Set up scaffold footprint', hazard: 'Struck-by falling objects, trips', control: 'Clear area, designate pedestrian paths', rac: 'M' },
+                { step: 2, work: 'Assemble base sections', hazard: 'Pinch points, strain', control: 'Use proper lifting techniques, gloves', rac: 'M' },
+                { step: 3, work: 'Install planking', hazard: 'Falls from height', control: '100% planked, guardrails installed', rac: 'E' },
+                { step: 4, work: 'Install guardrails', hazard: 'Falls', control: 'Top rail 42", mid rail 21", toe boards', rac: 'E' },
+                { step: 5, work: 'Inspect scaffold', hazard: 'Structural failure', control: 'Competent person inspection before each use', rac: 'E' },
+                { step: 6, work: 'Tag scaffold', hazard: 'Use of unsafe scaffold', control: 'Green "SAFE TO USE" or Red "DANGER - DO NOT USE" tag', rac: 'E' }
+            ],
+            'electrical': [
+                { step: 1, work: 'De-energize circuits', hazard: 'Electrocution', control: 'Lockout/tagout verified by qualified person', rac: 'E' },
+                { step: 2, work: 'Test for absence of voltage', hazard: 'Electrocution', control: 'Use properly rated tester, verify before touch', rac: 'E' },
+                { step: 3, work: 'Install grounds', hazard: 'Electrocution, sudden energization', control: 'Ground set before energization', rac: 'E' },
+                { step: 4, work: 'Work on energized systems (if required)', hazard: 'Electrocution', control: 'Qualified person, PPE, energized work permit', rac: 'E' },
+                { step: 5, work: 'Remove grounds and restore', hazard: 'Electrocution', control: 'Verify all tools clear, remove grounds in reverse order', rac: 'E' }
+            ],
+            'confined-space': [
+                { step: 1, work: 'Identify confined space', hazard: 'Unrecognized hazard', control: 'Review drawings, consult competent person', rac: 'H' },
+                { step: 2, work: 'Atmospheric testing', hazard: 'Toxic atmosphere, oxygen deficiency', control: 'Test O2, LEL, CO, H2S before entry', rac: 'E' },
+                { step: 3, work: 'Ventilate space', hazard: 'Atmospheric hazards', control: 'Continuous ventilation or forced air', rac: 'H' },
+                { step: 4, work: 'Establish communication', hazard: 'Inability to communicate', control: 'Voice, visual, or radio contact maintained', rac: 'M' },
+                { step: 5, work: 'Post attendants', hazard: 'Unmonitored hazard', control: 'Dedicated attendant outside space at all times', rac: 'E' },
+                { step: 6, work: 'Entry and work', hazard: 'Multiple hazards', control: 'Follow AHA controls, PPE as required', rac: 'E' }
+            ],
+            'crane': [
+                { step: 1, work: 'Site assessment', hazard: 'Unstable ground, overhead hazards', control: 'Ground bearing test, clear overhead', rac: 'H' },
+                { step: 2, work: 'Set up crane', hazard: 'Tip-over, struck-by', control: 'Outriggers fully extended, level, within load chart', rac: 'E' },
+                { step: 3, work: 'Rig load', hazard: 'Struck-by load, pinch points', control: 'Qualified rigger, proper rigging, inspection', rac: 'E' },
+                { step: 4, work: 'Signal operator', hazard: 'Struck-by load', control: 'Qualified signal person, standard signals', rac: 'E' },
+                { step: 5, work: 'Lift and move', hazard: 'Struck-by, tip-over', control: 'Stay out of swing radius, verify load chart', rac: 'E' },
+                { step: 6, work: 'Set and secure load', hazard: 'Struck-by, crush', control: 'Stable placement, chocked, tagged', rac: 'E' }
+            ],
+            'fall-protection': [
+                { step: 1, work: 'Identify fall hazards', hazard: 'Falls >6ft', control: 'Survey work area for fall hazards', rac: 'E' },
+                { step: 2, work: 'Select fall protection system', hazard: 'Inadequate protection', control: 'Guardrails, safety net, or PFAS', rac: 'E' },
+                { step: 3, work: 'Install guardrails', hazard: 'Falls during installation', control: 'Install from safe surface or PFAS worn', rac: 'E' },
+                { step: 4, work: 'Set up PFAS', hazard: 'Falls', control: 'Full body harness, lanyard, anchored to rated point', rac: 'E' },
+                { step: 5, work: 'Inspect equipment', hazard: 'Equipment failure', control: 'Qualified person inspects before each use', rac: 'E' },
+                { step: 6, work: 'Train workers', hazard: 'Improper use', control: 'Training on system use, limitations, rescue', rac: 'E' }
+            ],
+            'fire-protection': [
+                { step: 1, work: 'Identify fire hazards', hazard: 'Fire, explosion', control: 'Survey area for combustibles, ignition sources', rac: 'H' },
+                { step: 2, work: 'Hot work permit', hazard: 'Uncontrolled fire', control: 'Written permit, fire watch, extinguisher present', rac: 'E' },
+                { step: 3, work: 'Fire watch setup', hazard: 'Undetected fire', control: 'Trained fire watcher, extinguishers ready', rac: 'E' },
+                { step: 4, work: 'Perform hot work', hazard: 'Fire, burns', control: 'Welding/cutting in designated area, PPE', rac: 'E' },
+                { step: 5, work: 'Fire watch duration', hazard: 'Delayed fire', control: 'Fire watch 1 hour after hot work, monitor', rac: 'E' }
+            ],
+            'traffic': [
+                { step: 1, work: 'Identify traffic hazards', hazard: 'Struck-by vehicles', control: 'Survey traffic patterns, speeds', rac: 'E' },
+                { step: 2, work: 'Develop traffic control plan', hazard: 'Confusion, accidents', control: 'Meet MUTCD requirements, flaggers', rac: 'E' },
+                { step: 3, work: 'Install signage', hazard: 'Struck-by vehicles', control: 'Advance warning, proper placement', rac: 'H' },
+                { step: 4, work: 'Set up flaggers', hazard: 'Struck-by vehicles', control: 'Trained flaggers, proper signaling, PPE', rac: 'E' },
+                { step: 5, work: 'Channelize traffic', hazard: 'Vehicle intrusion', control: 'Barriers, cones, buffer zones', rac: 'E' }
+            ]
+        };
+        
+        let stripe = null;
+        
+        // Initialize Stripe with test key
+        try {
+            stripe = Stripe('pk_test_placeholder');
+        } catch(e) {
+            console.log('Stripe will be connected on deploy');
+        }
+        
+        // Activity change handler
+        document.getElementById('activityType').addEventListener('change', function() {
+            const activity = this.value;
+            const tbody = document.getElementById('ahaTableBody');
+            
+            if (!activity || !ahaData[activity]) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #718096;">Select an activity to generate AHA steps</td></tr>';
+                return;
+            }
+            
+            const steps = ahaData[activity];
+            tbody.innerHTML = steps.map(s => `
+                <tr>
+                    <td>${s.step}</td>
+                    <td>${s.work}</td>
+                    <td>${s.hazard}</td>
+                    <td>${s.control}</td>
+                    <td><span class="rac rac-${s.rac}">${s.rac}</span></td>
+                </tr>
+            `).join('');
+            
+            showToast('AHA generated! Free version shows first 2 steps.');
+        });
+        
+        function generatePDF() {
+            const activity = document.getElementById('activityType').value;
+            const contractNum = document.getElementById('contractNum').value;
+            const projectName = document.getElementById('projectName').value;
+            const projectLocation = document.getElementById('projectLocation').value;
+            const contractorName = document.getElementById('contractorName').value;
+            
+            if (!activity || !contractNum || !projectName || !projectLocation || !contractorName) {
+                showToast('Please fill in all required fields!');
+                return;
+            }
+            
+            // For MVP, show alert - in production, this would generate a real PDF
+            alert('PDF Download would generate here!\n\nActivity: ' + activity + '\nContract: ' + contractNum + '\nProject: ' + projectName + '\n\nFree users get watermarked PDF with first 2 steps only.\nUpgrade to Pro for full AHA!');
+        }
+        
+        function clearForm() {
+            document.getElementById('activityType').value = '';
+            document.getElementById('contractNum').value = '';
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectLocation').value = '';
+            document.getElementById('contractorName').value = '';
+            document.getElementById('ahaTableBody').innerHTML = '<tr><td colspan="5" style="text-align: center; color: #718096;">Select an activity to generate AHA steps</td></tr>';
+        }
+        
+        function subscribe() {
+            // In production, this would redirect to Stripe checkout
+            alert('Stripe checkout would open here!\n\nMonthly subscription: $29/month');
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+    </script>
+</body>
+</html>
