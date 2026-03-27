@@ -1,0 +1,11 @@
+# Ignore these
+*.skill
+venv/
+memory/
+*.pyc
+__pycache__/
+.DS_Store
+*.pdf
+*.docx
+transfer/
+etsy_products/
